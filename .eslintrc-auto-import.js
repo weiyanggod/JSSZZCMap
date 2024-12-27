@@ -1,16 +1,31 @@
 export default {
   "globals": {
+    "ConfigProvider": true,
+    "Descriptions": true,
+    "Empty": true,
+    "Image": true,
     "Link": true,
+    "Modal": true,
     "NavLink": true,
     "Navigate": true,
     "Outlet": true,
+    "Progress": true,
+    "PropTypes": true,
     "Route": true,
     "Routes": true,
+    "Select": true,
+    "Table": true,
+    "Tag": true,
+    "Tooltip": true,
     "createRef": true,
+    "dayjs": true,
     "forwardRef": true,
+    "getWeatherIcon": true,
     "https": true,
     "lazy": true,
+    "lodash": true,
     "memo": true,
+    "pxToRem": true,
     "startTransition": true,
     "useCallback": true,
     "useContext": true,
@@ -38,6 +53,8 @@ export default {
     "useSearchParams": true,
     "useState": true,
     "useSyncExternalStore": true,
-    "useTransition": true
+    "useTransition": true,
+    "week": true,
+    "秀洲区": true
   }
 }

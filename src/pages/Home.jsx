@@ -1,23 +1,29 @@
+import Header from './component/Header.jsx'
+import Assets from './component/Assets.jsx'
+import MapApp from './component/MapApp.jsx'
+import Rent from './component/Rent.jsx'
 import styled from 'styled-components'
-import { Button, Space, DatePicker, version } from 'antd'
-const DivStyle = styled.div`
-  color: blue;
-`
-
+import RScaleScreen from 'r-scale-screen'
+import backgroundImageUrl from '@/assets/背景.png'
 const Home = () => {
   return (
-    <div className='text-red-5'>
-      <h1>Home</h1>
-      <DivStyle>Styled Component</DivStyle>
-      <div style={{ padding: '0 24px' }}>
-        <h1>antd version: {version}</h1>
-        <Space>
-          <DatePicker />
-          <Button type='primary'>Primary Button</Button>
-        </Space>
-      </div>
-    </div>
+    <RScaleScreen height={911} width={1920}>
+      <Page>
+        <Header></Header>
+        <Assets></Assets>
+        <MapApp></MapApp>
+        <Rent></Rent>
+      </Page>
+    </RScaleScreen>
   )
 }
+
+const Page = styled.div`
+  position: relative;
+  background-image: url(${backgroundImageUrl});
+  background-size: 100% 100%;
+  width: 100%;
+  height: 100%;
+`
 
 export default Home

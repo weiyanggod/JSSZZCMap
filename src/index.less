@@ -1,0 +1,103 @@
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  width: 100%;
+  height: 100vh;
+}
+@font-face {
+  font-family: 'AlibabaPuHuiTi-115';
+  src: url('@/assets/font/AlibabaPuHuiTi-2-115-Black.ttf');
+}
+@font-face {
+  font-family: 'AlibabaPuHuiTi-85';
+  src: url('@/assets/font/AlibabaPuHuiTi-2-85-Bold.ttf');
+}
+@font-face {
+  font-family: 'AlibabaPuHuiTi-75';
+  src: url('@/assets/font/AlibabaPuHuiTi-2-75-SemiBold.ttf');
+}
+@font-face {
+  font-family: 'AlibabaPuHuiTi-55';
+  src: url('@/assets/font/AlibabaPuHuiTi-2-55-Regular.ttf');
+}
+@font-face {
+  font-family: 'AlibabaPuHuiTi-45';
+  src: url('@/assets/font/AlibabaPuHuiTi-2-45-Light.ttf');
+}
+.fa-115 {
+  font-family: 'AlibabaPuHuiTi-115';
+}
+.fa-85 {
+  font-family: 'AlibabaPuHuiTi-85';
+}
+.fa-75 {
+  font-family: 'AlibabaPuHuiTi-75';
+}
+.fa-55 {
+  font-family: 'AlibabaPuHuiTi-55';
+}
+.fa-45 {
+  font-family: 'AlibabaPuHuiTi-45';
+}
+.map {
+  position: absolute;
+  left: 35%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 800px;
+}
+.timeColor {
+  background: linear-gradient(#90fff6 20%, #fff);
+  -webkit-background-clip: text; /*将设置的背景颜色限制在文字中*/
+  -webkit-text-fill-color: transparent; /*给文字设置成透明*/
+}
+.ant-select-selector {
+  border: 0px !important;
+}
+.ant-select-selection-item {
+  font-size: 16px;
+  font-family: 'AlibabaPuHuiTi-85';
+  .timeColor;
+}
+.ant-select-arrow {
+  color: rgba(0, 0, 0, 0) !important;
+}
+.ant-progress-text {
+  color: #fff !important;
+}
+.ant-modal-title {
+  text-align: center;
+  color: #fff !important;
+}
+.ant-modal-close-x {
+  color: #b4ebde;
+}
+.ant-table-thead > tr > th::before {
+  display: none;
+}
+::-webkit-scrollbar {
+  width: 10px; /* 纵向滚动条*/
+  height: 5px; /* 横向滚动条 */
+}
+
+/*定义滚动条轨道 内阴影*/
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+/*定义滑块 内阴影*/
+::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
+  background-color: #dddddd;
+  border-radius: 10px;
+}

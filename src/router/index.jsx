@@ -1,9 +1,9 @@
 // router.js
-import { createBrowserRouter } from 'react-router-dom'
+import { createHashRouter } from 'react-router-dom'
 import HomePage from '@/pages/Home.jsx'
 
 // 定义路由配置
-export const router = createBrowserRouter(
+export const router = createHashRouter(
   [
     {
       path: '/',
