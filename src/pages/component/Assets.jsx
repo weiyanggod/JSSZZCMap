@@ -80,29 +80,29 @@ const Assets = () => {
       setExtraInfo([
         {
           name: '土地面积',
-          number: overAllData.field0021.toLocaleString() + 'm²',
+          number: overAllData.field0021.toFixed(2) + 'm²',
         },
         {
           name: '入账总价值',
-          number: overAllData.field0016.toLocaleString() + '万元',
+          number: overAllData.field0016.toFixed(2) + '万元',
         },
         {
           name: '产权数量',
-          number: overAllData.field0045.toLocaleString(),
+          number: overAllData.field0045.toFixed(2),
         },
         {
           name: '抵押数量',
-          number: overAllData.field0121.toLocaleString(),
+          number: overAllData.field0121.toFixed(2),
         },
         {
           name: '空置率',
-          number: overAllData.rate * 100 || 0 + '%',
+          number: (overAllData.rate * 100).toFixed(2) + '%',
         },
       ])
       const xData = []
       const yData = []
       assetProportionData.forEach((item) => {
-        xData.push(item.field0111)
+        xData.push(item.field0111.toLocaleString())
         yData.push(item.field0020)
       })
 
@@ -114,9 +114,8 @@ const Assets = () => {
       setAssetNatureData(() => {
         const result = []
         assetNatureData.forEach((item) => {
-          result.push([item.field0012, (item.rate * 1).toLocaleString() * 1])
+          result.push([item.field0012, (item.rate * 1).toFixed(2) * 1])
         })
-
         return result
       })
     }
