@@ -32,10 +32,10 @@ const ThreeDBar = (props) => {
       tooltip: {
         trigger: 'axis',
         formatter: function (params) {
-          var str = params[0].axisValue + '：'
+          var str = params[0].axisValue + ':'
           params.filter(function (item) {
             if (item.componentSubType == 'bar') {
-              str += '<br/>' + item.seriesName + '：' + item.value
+              str += +item.value
             }
           })
           return str

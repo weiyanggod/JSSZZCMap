@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 // 定义初始状态为包含多个属性的对象
 
 const initialState = {
-  select: null,
+  select: '',
 }
 
 // 创建切片

@@ -96,12 +96,14 @@ const getWeatherIcon = (weather) => {
         url = new URL(`../assets/weather/${weatherKey}.png`, import.meta.url)
           .href
         // console.debug('@find weather key = ', weatherKey)
-        break
       }
     }
   }
-
   return url
 }
 
-export { PropTypes, pxToRem, dayjs, week, getWeatherIcon, lodash }
+const getStatusUrl = (key) => {
+  return new URL(`../assets/${key}.png`, import.meta.url).href
+}
+
+export { PropTypes, pxToRem, dayjs, week, getWeatherIcon, lodash, getStatusUrl }

@@ -4,10 +4,8 @@ import * as echarts from 'echarts/core'
 import mapImg from '@/assets/纹理.jpg'
 import Model from '@/pages/component/Model.jsx'
 import { getPoint } from '@/api/MapApp.js'
-import { useSelector } from 'react-redux'
-const MapApp = () => {
-  const select = useSelector((state) => state.data.select)
-
+import buildingTag from '@/assets/楼宇标签.png'
+const MapApp = ({ selectId }) => {
   const [showModal, setShowModal] = useState(false)
   const [totalZoom, setTotalZoom] = useState(1.2)
   const [buildData, setBuildData] = useState({})
@@ -66,7 +64,7 @@ const MapApp = () => {
         number: 0,
       },
 
-      symbol: 'image://' + 'src/assets/楼宇标签.png',
+      symbol: 'image://' + buildingTag,
       symbolSize: [20, 50],
       symbolRotate: 0,
       data: [],
@@ -107,7 +105,7 @@ const MapApp = () => {
   }
 
   const render = async () => {
-    const res = await getPoint({ company: select })
+    const res = await getPoint({ company: selectId })
     const list = []
 
     res.forEach((item) => {
@@ -131,7 +129,7 @@ const MapApp = () => {
       newOption.series.data = res
       setOption(newOption)
     })
-  }, [select])
+  }, [selectId])
 
   return (
     <div>
@@ -139,7 +137,7 @@ const MapApp = () => {
         ref={mapRef}
         id='map'
         className='map'
-        style={{ height: '700px', width: '900px' }}
+        style={{ height: '800px', width: '900px' }}
         option={option}
         onEvents={onEvents}></ReactEcharts>
       <Model
@@ -151,5 +149,7 @@ const MapApp = () => {
     </div>
   )
 }
-
+MapApp.propTypes = {
+  selectId: PropTypes.string.isRequired,
+}
 export default MapApp

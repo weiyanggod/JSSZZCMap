@@ -5,14 +5,18 @@ import Rent from './component/Rent.jsx'
 import styled from 'styled-components'
 import RScaleScreen from 'r-scale-screen'
 import backgroundImageUrl from '@/assets/背景.png'
+import { useSelector } from 'react-redux'
+
 const Home = () => {
+  const selectId = useSelector((state) => state.data.select)
+
   return (
-    <RScaleScreen height={911} width={1920}>
+    <RScaleScreen height={911} width={1920} fullScreen>
       <Page>
         <Header></Header>
-        <Assets></Assets>
-        <MapApp></MapApp>
-        <Rent></Rent>
+        <Assets selectId={selectId}></Assets>
+        <MapApp selectId={selectId}></MapApp>
+        <Rent selectId={selectId}></Rent>
       </Page>
     </RScaleScreen>
   )

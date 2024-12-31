@@ -19,6 +19,7 @@ export default {
     "createRef": true,
     "dayjs": true,
     "forwardRef": true,
+    "getStatusUrl": true,
     "getWeatherIcon": true,
     "https": true,
     "lazy": true,

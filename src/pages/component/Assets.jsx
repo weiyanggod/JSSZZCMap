@@ -6,39 +6,16 @@ import threeDPieBackgroundImage from '@/assets/3d饼图背景.png'
 import titleBackgroundImage from '@/assets/标题背景.png'
 import bracketsBackgroundImage from '@/assets/资产总览大括号.png'
 import { getOverAll, getAssetProportion, getAssetNature } from '@/api/Assets.js'
-import { useSelector } from 'react-redux'
-const Assets = () => {
-  const select = useSelector((state) => state.data.select)
 
+const Assets = ({ selectId }) => {
   // 资产总览
   const [areaList, setAreaList] = useState([130000, 86008, 10512, 4058])
-  const [extraInfo, setExtraInfo] = useState([
-    {
-      name: '土地面积',
-      number: 0 + 'm²',
-    },
-    {
-      name: '入账总价值',
-      number: 0 + '万元',
-    },
-    {
-      name: '产权数量',
-      number: 0,
-    },
-    {
-      name: '抵押数量',
-      number: 0,
-    },
-    {
-      name: '空置率',
-      number: 0 + '%',
-    },
-  ])
+  const [extraInfo, setExtraInfo] = useState([])
 
   //资产占比
   const [assetProportionData, setAssetProportionXData] = useState({
-    xData: ['梅里', '闻川', '盛宏'],
-    yData: [100, 200, 300],
+    xData: [],
+    yData: [],
   })
 
   // 资产性质
@@ -68,9 +45,9 @@ const Assets = () => {
 
   useEffect(() => {
     const render = async () => {
-      const overAllData = await getOverAll({ company: select })
+      const overAllData = await getOverAll({ company: selectId })
       const assetProportionData = await getAssetProportion()
-      const assetNatureData = await getAssetNature({ company: select })
+      const assetNatureData = await getAssetNature({ company: selectId })
       setAreaList([
         overAllData.field0020,
         overAllData.field0074,
@@ -102,10 +79,9 @@ const Assets = () => {
       const xData = []
       const yData = []
       assetProportionData.forEach((item) => {
-        xData.push(item.field0111.toLocaleString())
-        yData.push(item.field0020)
+        xData.push(item.field0111)
+        yData.push((item.field0020 * 1).toFixed(2) * 1)
       })
-
       setAssetProportionXData({
         xData,
         yData,
@@ -114,13 +90,13 @@ const Assets = () => {
       setAssetNatureData(() => {
         const result = []
         assetNatureData.forEach((item) => {
-          result.push([item.field0012, (item.rate * 1).toFixed(2) * 1])
+          result.push([item.field0012, (item.rate * 1).toLocaleString() * 1])
         })
         return result
       })
     }
     render()
-  }, [select])
+  }, [selectId])
 
   return (
     <Page>
@@ -183,7 +159,9 @@ const Assets = () => {
     </Page>
   )
 }
-
+Assets.propTypes = {
+  selectId: PropTypes.string.isRequired,
+}
 const Page = styled.div`
   position: relative;
   left: ${pxToRem(15)};

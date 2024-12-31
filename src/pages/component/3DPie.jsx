@@ -22,7 +22,7 @@ const ThreeDPie = (props) => {
       tooltip: {
         headerFormat: '',
         pointFormat:
-          '<div style="font-size: 13px"><span style="color:{point.color}; font-weight:400">{point.name}</span><span style="font-weight:400">  {point.y}</span></div> ',
+          '<div style="font-size: 13px"><span style="color:#000; font-weight:400">{point.name}</span><span style="font-weight:400">{(multiply point.y 100):.2f}%</span></div> ',
       },
       plotOptions: {
         pie: {
@@ -51,7 +51,7 @@ const ThreeDPie = (props) => {
       ],
     }
     Highcharts.chart('pie', options)
-  })
+  }, [props.realData])
 
   return <div id='pie' className='wh-full'></div>
 }

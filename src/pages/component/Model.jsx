@@ -45,10 +45,9 @@ const ModelApp = (props) => {
     },
     {
       title: '合同期限',
-      // dataIndex: '合同期限',
       align: 'center',
       render: (params) => (
-        <div>{params.field0034 + '至' + params.field0033}</div>
+        <div>{params.field0033 + '至' + params.field0034}</div>
       ),
     },
   ]
@@ -67,6 +66,8 @@ const ModelApp = (props) => {
   }
 
   const openRoomModal = async (item) => {
+    cutModal(false)
+    setRoomModal(true)
     const res = await getRoomList({
       id: item.field0029,
       id2: item.field0132,
@@ -74,8 +75,7 @@ const ModelApp = (props) => {
     const data = res
     data.list = res.ht
     delete data.ht
-    cutModal(false)
-    setRoomModal(true)
+
     setRoomData(res)
   }
 
@@ -105,6 +105,7 @@ const ModelApp = (props) => {
             headerColor: '#fff',
             headerBorderRadius: 0,
             cellPaddingBlockSM: 5,
+            rowHoverBg: 'transparent',
           },
         },
       }}>
@@ -119,7 +120,7 @@ const ModelApp = (props) => {
         }}
         mask={false}
         maskClosable={false}
-        width={700}
+        width={'45vw'}
         styles={{
           body: {
             maxHeight: '500px',
@@ -170,7 +171,7 @@ const ModelApp = (props) => {
                       preview={false}
                       width='50px'
                       height='20px'
-                      src={'src/assets/' + item.field0069 + '.png'}></Image>
+                      src={getStatusUrl(item.field0069)}></Image>
                   </Descriptions.Item>
                 </Descriptions>
                 <RightOutlined
@@ -183,7 +184,8 @@ const ModelApp = (props) => {
           {buildList.length == 0 && (
             <div className='mt-5'>
               <Empty
-                description={<div className='text-white '>暂无数据</div>}
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                description={<div className='text-white'>暂无数据</div>}
               />
             </div>
           )}
@@ -191,7 +193,7 @@ const ModelApp = (props) => {
       </Modal>
       <Modal
         title={
-          <div className='w-[560px] pl-[50px] truncate text-center'>
+          <div className='w-[100%] px-[100px] truncate text-center box-border'>
             {roomData.field0004}
           </div>
         }
@@ -203,7 +205,7 @@ const ModelApp = (props) => {
         }}
         mask={false}
         maskClosable={false}
-        width={700}>
+        width={'45vw'}>
         <div>
           <LeftOutlined
             onClick={() => {
@@ -245,26 +247,34 @@ const ModelApp = (props) => {
                     preview={false}
                     width='50px'
                     height='20px'
-                    src={'src/assets/' + roomData.field0069 + '.png'}></Image>
+                    src={getStatusUrl(roomData.field0069)}></Image>
                 </Descriptions.Item>
               </Descriptions>
             </div>
             <Title>资产详情</Title>
             <div className='pl-10 mt-4'>
-              <Table
-                size='small'
-                pagination={false}
-                columns={columns}
-                dataSource={roomData.list}
-                rowClassName={(record, index) => {
-                  let className = ''
-                  className =
-                    index % 2 === 0
-                      ? 'bg-white color-black fa-55'
-                      : 'bg-[#e7e9f1] color-black fa-55'
-                  return className
-                }}
-              />
+              {roomData.list.length > 0 && (
+                <Table
+                  size='small'
+                  pagination={false}
+                  columns={columns}
+                  dataSource={roomData.list}
+                  rowClassName={(record, index) => {
+                    let className = ''
+                    className =
+                      index % 2 === 0
+                        ? ' color-black fa-55 '
+                        : ' color-black fa-55 '
+                    return className
+                  }}
+                />
+              )}
+              {roomData.list.length === 0 && (
+                <Empty
+                  image={Empty.PRESENTED_IMAGE_SIMPLE}
+                  description={<div className='text-white'>暂无数据</div>}
+                />
+              )}
             </div>
           </div>
         </div>

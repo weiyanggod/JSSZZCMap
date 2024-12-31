@@ -13,7 +13,11 @@ const Header = () => {
     temperature: '',
   })
   const [selectList, setSelectList] = useState([])
+  const [nowTime, setNowTime] = useState(dayjs().format('HH:mm:ss'))
 
+  setInterval(() => {
+    setNowTime(dayjs().format('HH:mm:ss'))
+  }, 1000)
   const onSelect = (value) => {
     dispatch(setSelect(value))
   }
@@ -32,7 +36,7 @@ const Header = () => {
       setSelectList([
         {
           name: '全部',
-          id: null,
+          id: '',
         },
         ...selectList,
       ])
@@ -53,6 +57,7 @@ const Header = () => {
             selectorBg: 'rgba(0,0,0,0)',
             activeBorderColor: 'rgba(0,0,0,0)',
             hoverBorderColor: 'rgba(0,0,0,0)',
+            optionFontSize: '0.8vw',
           },
         },
       }}>
@@ -73,7 +78,7 @@ const Header = () => {
             </div>
             <div className='ml-4'>
               <div className='text-xl timeColor tracking-0.25rem font-600'>
-                {dayjs().format('HH:mm:ss')}
+                {nowTime}
               </div>
               <div className='text-0.625rem color-[#90FFF6] fa-45'>
                 {dayjs().format('YYYY年MM月DD日')}
@@ -87,18 +92,28 @@ const Header = () => {
         <Title className='timeColor'>经营性资产数字地图</Title>
         <Edit>
           <div className='flex   items-center'>
-            <img src={cutImg} alt='' />
+            <img
+              src={cutImg}
+              className='cursor-pointer'
+              onClick={() => {
+                window.location.reload()
+              }}
+            />
             <Select
               defaultValue='全部'
-              style={{ width: 120 }}
+              style={{ width: '8vw' }}
               onSelect={onSelect}
               fieldNames={{ label: 'name', value: 'id' }}
               options={selectList}
             />
           </div>
-          <div className='flex   items-center'>
-            <img src={homeImg} alt='' />
-            <div className='timeColor font-600 cursor-pointer fa-85'>首页</div>
+          <div
+            className='flex   items-center cursor-pointer'
+            onClick={() => {
+              window.location.reload()
+            }}>
+            <img src={homeImg} />
+            <div className='timeColor font-600  fa-85'>首页</div>
           </div>
         </Edit>
       </div>

@@ -12,7 +12,6 @@ import {
   getRentStation,
 } from '@/api/Rent.js'
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
 const ProgressColorList = [
   {
     '0%': '#1e9efc ',
@@ -28,9 +27,7 @@ const ProgressColorList = [
   },
 ]
 
-const Rent = () => {
-  const select = useSelector((state) => state.data.select)
-
+const Rent = ({ selectId }) => {
   const [progressList, setProgressList] = useState([])
   const [pieData, setPieData] = useState([])
   const [lineData, setLineData] = useState([])
@@ -108,7 +105,7 @@ const Rent = () => {
     const option = {
       tooltip: {
         show: true,
-        trigger: 'axis',
+        trigger: 'item',
       },
       grid: {
         left: '10%',
@@ -190,8 +187,8 @@ const Rent = () => {
   }
 
   const render = async () => {
-    const progressListRes = await getRentOverview({ company: select })
-    const pieDataRes = await getBusinessAnalysis({ company: select })
+    const progressListRes = await getRentOverview({ company: selectId })
+    const pieDataRes = await getBusinessAnalysis({ company: selectId })
     const lineDataRes = await getRentStation()
 
     setPieData(
@@ -213,7 +210,7 @@ const Rent = () => {
       },
       {
         name: '出租率',
-        number: (progressListRes.rate * 1).toLocaleString() * 100,
+        number: (progressListRes.rate * 100).toFixed(2),
       },
     ])
 
@@ -248,7 +245,7 @@ const Rent = () => {
 
   useEffect(() => {
     render()
-  }, [select])
+  }, [selectId])
 
   return (
     <Page>
@@ -266,8 +263,10 @@ const Rent = () => {
                   format={() => {
                     return index === 0 ? (
                       <div>{item.number}m²</div>
-                    ) : (
+                    ) : index === 1 ? (
                       <div>{item.number}万元</div>
+                    ) : (
+                      <div>{item.number}%</div>
                     )
                   }}
                   percent={item.number}
@@ -294,6 +293,11 @@ const Rent = () => {
     </Page>
   )
 }
+
+Rent.propTypes = {
+  selectId: PropTypes.string.isRequired,
+}
+
 const Page = styled.div`
   position: absolute;
   right: ${pxToRem(30)};

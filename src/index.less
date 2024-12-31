@@ -48,7 +48,7 @@ body {
 .map {
   position: absolute;
   left: 35%;
-  top: 50%;
+  top: 52%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 600px;
@@ -80,9 +80,27 @@ body {
 .ant-modal-close-x {
   color: #b4ebde;
 }
+.ant-table {
+  background-color: transparent !important;
+}
 .ant-table-thead > tr > th::before {
   display: none;
 }
+
+.ant-table-tbody .ant-table-cell {
+  background-color: transparent !important;
+  color: #f8f8ff;
+  border-left: 1px solid #fff !important;
+}
+.ant-table-placeholder {
+  background-color: transparent !important;
+}
+
+.ant-table-placeholder .ant-table-cell,
+.ant-table-tbody .ant-table-cell:nth-child(4) {
+  border-right: 1px solid #fff !important;
+}
+
 ::-webkit-scrollbar {
   width: 10px; /* 纵向滚动条*/
   height: 5px; /* 横向滚动条 */

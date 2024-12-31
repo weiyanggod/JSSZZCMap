@@ -2,7 +2,7 @@
 import axios from 'axios'
 
 const httpService = axios.create({
-  baseURL: '/api', // 替换为你的 API 基础 URL
+  baseURL: '', // 替换为你的 API 基础 URL
   timeout: 10000, // 请求超时时间
 })
 
@@ -32,10 +32,16 @@ httpService.interceptors.response.use(
 )
 
 // 封装常用的请求方法
-const get = (url, params) => httpService.get(url, { params })
-const post = (url, data) => httpService.post(url, data)
-const put = (url, data) => httpService.put(url, data)
-const del = (url) => httpService.delete(url)
+const get = (url, params) => {
+  if (params?.company === '') {
+    params.company = null
+  }
+
+  return httpService.get('/zckb' + url, { params })
+}
+const post = (url, data) => httpService.post('/zckb' + url, data)
+const put = (url, data) => httpService.put('/zckb' + url, data)
+const del = (url) => httpService.delete('/zckb' + url)
 
 export default {
   get,
