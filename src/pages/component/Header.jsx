@@ -45,13 +45,13 @@ const Header = () => {
 
   // 远程搜索
   const debounceFetcher = lodash.debounce((value) => {
+    setFetching(true)
     getPoint({ id: selectValue, name: value }).then((res) => {
       const list = res.filter((i) => i.field0012 !== null)
-
       setPointList(list)
       setFetching(false)
     })
-  }, 1000)
+  }, 500)
 
   useEffect(() => {
     const render = async () => {

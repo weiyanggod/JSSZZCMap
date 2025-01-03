@@ -111,7 +111,7 @@ const Rent = ({ selectId }) => {
         trigger: 'item',
       },
       grid: {
-        left: '5%', //图表距边框的距离
+        left: '7%', //图表距边框的距离
         right: '3%',
         top: '20%',
         bottom: '0%',
@@ -256,7 +256,7 @@ const Rent = ({ selectId }) => {
       <ProgressList className='ProgressList'>
         {progressList.map((item, index) => {
           return (
-            <div key={index} className='mt-12px w-2/3'>
+            <div key={index} className='mt-12px w-85%'>
               <div className='text-[#D4EFEA]  fa-85'>{item.name}</div>
               <div className='w-full mt-[10px]'>
                 <Progress
@@ -265,11 +265,11 @@ const Rent = ({ selectId }) => {
                   trailColor='#2c4353'
                   format={() => {
                     return index === 0 ? (
-                      <div>{item.number}m²</div>
+                      <div className='text-[18px]'>{item.number}m²</div>
                     ) : index === 1 ? (
-                      <div>{item.number}万元</div>
+                      <div className='text-[18px]'>{item.number}万元</div>
                     ) : (
-                      <div>{item.number}%</div>
+                      <div className='text-[18px]'>{item.number}%</div>
                     )
                   }}
                   percent={item.number}
@@ -280,11 +280,11 @@ const Rent = ({ selectId }) => {
         })}
       </ProgressList>
       <Title className='mt-[10px]'>业态分析</Title>
-      <div className='w-full h-[30%]'>
+      <div className='w-full h-[32%]'>
         <ReactEcharts style={{ height: '100%' }} option={getPieOption()} />
       </div>
       <Title>本年收租情况</Title>
-      <div className='w-full h-[30%] px-[10%] box-border'>
+      <div className='w-full h-[28%] px-[2%] box-border'>
         <ReactEcharts style={{ height: '100%' }} option={getLineOption()} />
       </div>
     </Page>

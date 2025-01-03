@@ -100,24 +100,31 @@ const Assets = ({ selectId }) => {
 
   return (
     <Page className='PageStyle'>
-      <Title>资产总览</Title>
+      {/* 资产总览 */}
       <AreaList className='AreaListStyle'>
-        {areaList.map((item, index) => {
-          return (
-            <div className='flex   w-1/2   mt-8px items-center' key={index}>
-              <img src={getAreaInfo('icon', index)} className='w-55px h-50px' />
-              <div className='ml-1 text-[16px]'>
-                <div className='color-[#D4EFEA] fa-85 '>
-                  {getAreaInfo('name', index)}
+        <Title>资产总览</Title>
+        <div className='content'>
+          {areaList.map((item, index) => {
+            return (
+              <div className='flex   w-1/2   mt-10px items-center ' key={index}>
+                <img
+                  src={getAreaInfo('icon', index)}
+                  className='w-55px h-50px'
+                />
+                <div className='ml-1 text-[16px]'>
+                  <div className='color-[#D4EFEA] fa-85 '>
+                    {getAreaInfo('name', index)}
+                  </div>
+                  <div className='number'>{item.toLocaleString()}</div>
                 </div>
-                <div className='number'>{item.toLocaleString()}</div>
               </div>
-            </div>
-          )
-        })}
+            )
+          })}
+        </div>
       </AreaList>
+      {/* 面积 */}
       <ExtraInfo className='ExtraInfoStyle'>
-        <div className='w-full flex flex-wrap  pl-[55px] py-[10px]'>
+        <div className='w-full flex flex-wrap py-[10px]'>
           {extraInfo.map((item, index) => {
             return (
               <div
@@ -137,7 +144,7 @@ const Assets = ({ selectId }) => {
       </ExtraInfo>
       <Title data-mt='2'>资产占比</Title>
       <div className='w-full h-[28%] flex justify-center'>
-        <div className='w-80% pt-[2%]'>
+        <div className='w-100% pt-[2%]'>
           <ThreeDBar
             height='100%'
             xData={assetProportionData.xData}
@@ -147,11 +154,11 @@ const Assets = ({ selectId }) => {
       <Title data-mt='2'>资产性质</Title>
       <div className='w-full flex-1 flex justify-center'>
         <div
-          className='w-80%'
+          className='w-100%'
           style={{
             backgroundImage: `url(${threeDPieBackgroundImage})`,
             backgroundRepeat: 'no-repeat',
-            backgroundPosition: '50% 70%',
+            backgroundPosition: '50% 90%',
           }}>
           <ThreeDPie realData={assetNatureData}></ThreeDPie>
         </div>
@@ -173,8 +180,11 @@ const Page = styled.div`
 export const Title = styled.div`
   background-image: url(${titleBackgroundImage});
   background-size: 100% 100%;
-  width: 21.36vw;
+  background-repeat: no-repeat;
+  width: 23.8vw;
   height: 2.02vw;
+  display: flex;
+  align-items: center;
   font-size: 0.909vw;
   font-family: 'AlibabaPuHuiTi-75';
   color: #ecf2ff;
@@ -187,10 +197,6 @@ export const Title = styled.div`
   box-sizing: border-box;
 `
 const AreaList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  width: 80%;
-  justify-content: space-around;
   .number {
     font-weight: 600;
     background: linear-gradient(to bottom, #23fffd, #fff);
@@ -199,18 +205,12 @@ const AreaList = styled.div`
   }
 `
 const ExtraInfo = styled.div`
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
   /* background-image: url(${bracketsBackgroundImage}); */
   background-position: 50% 0%;
-  background-repeat: no-repeat;
   .item {
-    width: 33%;
     box-sizing: border-box;
   }
   .number {
-    font-weight: 600;
     background: linear-gradient(
       to bottom,
       #fdff60,

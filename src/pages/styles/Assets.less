@@ -1,40 +1,44 @@
 .PageStyle {
   position: relative;
-  left: 15px;
+  left: 40px;
   top: 10%;
-  width: 500px;
-  height: 86%;
+  width: 457px;
+  padding: 0;
+  height: 87%;
   display: flex;
   align-items: center;
   flex-direction: column;
 }
 .AreaListStyle {
+  width: 100%;
   display: flex;
-  flex-wrap: wrap;
-  width: 80%;
-  justify-content: space-around;
-  .number {
-    font-size: 20px;
-    letter-spacing: 0.5px;
-    font-weight: 600;
-    background: linear-gradient(to bottom, #23fffd, #fff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+  flex-direction: column;
+  align-items: center;
+  .content {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 1%;
+    margin-left: 3%;
+    .number {
+      font-size: 20px;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+      background: linear-gradient(to bottom, #23fffd, #fff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
   }
 }
 .ExtraInfoStyle {
   width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 10px;
-  background-position: 50% 0%;
-  background-repeat: no-repeat;
+  margin-top: 1%;
+  margin-left: 8%;
   .item {
     width: 33%;
   }
   .number {
     font-weight: 600;
     font-size: 15px;
-    margin-top: 2px;
+    margin-top: 5px;
   }
 }

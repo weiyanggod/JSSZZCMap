@@ -22,7 +22,7 @@ const MapApp = ({ selectId, point }) => {
       label: {
         show: true,
         color: '#fff',
-        fontSize: 20,
+        fontSize: 16,
       },
       itemStyle: {
         borderColor: {

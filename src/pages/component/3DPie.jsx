@@ -52,6 +52,7 @@ const ThreeDPie = (props) => {
               textOutline: 'none',
             },
           },
+          center: ['50%', '60%'],
         },
       },
       series: [

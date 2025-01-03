@@ -43,7 +43,7 @@ const ThreeDBar = (props) => {
       },
 
       grid: {
-        left: '1%', //图表距边框的距离
+        left: '3%', //图表距边框的距离
         right: '3%',
         top: '20%',
         bottom: '0%',
