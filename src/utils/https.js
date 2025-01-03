@@ -33,8 +33,8 @@ httpService.interceptors.response.use(
 
 // 封装常用的请求方法
 const get = (url, params) => {
-  if (params?.company === '') {
-    params.company = null
+  if (params?.id === '') {
+    params.id = null
   }
 
   return httpService.get('/zckb' + url, { params })

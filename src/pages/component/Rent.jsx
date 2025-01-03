@@ -5,13 +5,14 @@ import ReactEcharts from 'echarts-for-react'
 import legendImg from '@/assets/图例.png'
 import legendImg2 from '@/assets/图例2.png'
 import legendImg3 from '@/assets/图例3.png'
-import pieBackgroundImage from '@/assets/饼图背景.png'
 import {
   getRentOverview,
   getBusinessAnalysis,
   getRentStation,
 } from '@/api/Rent.js'
 import { useEffect, useState } from 'react'
+import '@/pages/styles/Rent.less'
+
 const ProgressColorList = [
   {
     '0%': '#1e9efc ',
@@ -41,7 +42,12 @@ const Rent = ({ selectId }) => {
       },
       legend: {
         top: '10%',
-        right: '15%',
+        right:
+          window.innerWidth <= 1440
+            ? '5%'
+            : window.innerWidth >= 1920
+              ? '10%'
+              : '10%',
         orient: 'vertical',
         itemGap: 15,
         itemWidth: 15,
@@ -63,23 +69,20 @@ const Rent = ({ selectId }) => {
       ],
       series: [
         {
-          left: '0%',
-          top: '6%',
+          left: '5%',
+          top: '3%',
           right: '40%',
           type: 'pie',
-          radius: ['70%', '85%'],
+          radius: ['40%', '65%'],
           avoidLabelOverlap: false,
           label: {
-            show: false,
-            position: 'center',
-          },
-          emphasis: {
-            label: {
-              show: false,
-            },
+            show: true,
+            backgroundColor: 'transparent',
+            color: '#fff',
           },
           labelLine: {
-            show: false,
+            length: 10,
+            length2: 0,
           },
           data: pieData,
         },
@@ -108,15 +111,15 @@ const Rent = ({ selectId }) => {
         trigger: 'item',
       },
       grid: {
-        left: '10%',
-        right: '10%',
-        bottom: '20%',
+        left: '5%', //图表距边框的距离
+        right: '3%',
         top: '20%',
+        bottom: '0%',
         containLabel: true,
       },
       legend: {
         show: true,
-        // top: '5%',
+        top: '5%',
         bottom: '10%',
         left: '20%',
         itemGap: 10,
@@ -143,7 +146,7 @@ const Rent = ({ selectId }) => {
         name: '租金(万元)',
         nameTextStyle: {
           color: '#d4efea',
-          padding: [0, 70, 3, 0],
+          padding: [0, 0, 5, 0],
         },
         type: 'value',
         axisLine: {
@@ -187,8 +190,8 @@ const Rent = ({ selectId }) => {
   }
 
   const render = async () => {
-    const progressListRes = await getRentOverview({ company: selectId })
-    const pieDataRes = await getBusinessAnalysis({ company: selectId })
+    const progressListRes = await getRentOverview({ id: selectId })
+    const pieDataRes = await getBusinessAnalysis({ id: selectId })
     const lineDataRes = await getRentStation()
 
     setPieData(
@@ -248,14 +251,14 @@ const Rent = ({ selectId }) => {
   }, [selectId])
 
   return (
-    <Page>
+    <Page className='Page'>
       <Title>出租总览</Title>
-      <ProgressList>
+      <ProgressList className='ProgressList'>
         {progressList.map((item, index) => {
           return (
-            <div key={index} className='mt-3 w-2/3'>
-              <div className='text-[#D4EFEA] title fa-85'>{item.name}</div>
-              <div className='w-full'>
+            <div key={index} className='mt-12px w-2/3'>
+              <div className='text-[#D4EFEA]  fa-85'>{item.name}</div>
+              <div className='w-full mt-[10px]'>
                 <Progress
                   strokeColor={ProgressColorList[index]}
                   strokeLinecap='butt'
@@ -276,19 +279,13 @@ const Rent = ({ selectId }) => {
           )
         })}
       </ProgressList>
-      <Title>业态分析</Title>
-      <div
-        className='w-full re'
-        style={{
-          backgroundImage: `url(${pieBackgroundImage})`,
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: '55px 8px',
-        }}>
-        <ReactEcharts style={{ height: 200 }} option={getPieOption()} />
+      <Title className='mt-[10px]'>业态分析</Title>
+      <div className='w-full h-[30%]'>
+        <ReactEcharts style={{ height: '100%' }} option={getPieOption()} />
       </div>
       <Title>本年收租情况</Title>
-      <div className='w-full re'>
-        <ReactEcharts style={{ height: 250 }} option={getLineOption()} />
+      <div className='w-full h-[30%] px-[10%] box-border'>
+        <ReactEcharts style={{ height: '100%' }} option={getLineOption()} />
       </div>
     </Page>
   )
@@ -300,16 +297,11 @@ Rent.propTypes = {
 
 const Page = styled.div`
   position: absolute;
-  right: ${pxToRem(30)};
-  top: ${pxToRem(83)};
-  width: ${pxToRem(500)};
-  height: ${pxToRem(780)};
   display: flex;
   flex-direction: column;
   align-items: center;
 `
 const ProgressList = styled.div`
-  margin-top: 10px;
   width: 100%;
   display: flex;
   flex-direction: column;

@@ -2,6 +2,7 @@ import { RightOutlined, LeftOutlined } from '@ant-design/icons'
 import styled from 'styled-components'
 import titleBackgroundImage from '@/assets/弹框标题.png'
 import { getBuildList, getRoomList } from '@/api/MapApp.js'
+import '@/pages/styles/Model.less'
 
 const truncate = {
   overflow: 'hidden',
@@ -53,10 +54,10 @@ const ModelApp = (props) => {
   ]
 
   const LeftOutlinedStyle = {
-    fontSize: '20px',
+    fontSize: '1vw',
     cursor: 'pointer',
     position: 'absolute',
-    top: '20px',
+    top: '1vw',
     color: '#b7f8e8',
   }
 
@@ -75,14 +76,15 @@ const ModelApp = (props) => {
     const data = res
     data.list = res.ht
     delete data.ht
-
     setRoomData(res)
   }
 
   const render = async () => {
     setLoading(true)
+
     const res = await getBuildList({
       id: buildData.id,
+      name: buildData.id === null ? buildData.name : null,
     })
     setBuildingList(res)
     setLoading(false)
@@ -123,9 +125,9 @@ const ModelApp = (props) => {
         width={'45vw'}
         styles={{
           body: {
-            maxHeight: '500px',
+            maxHeight: '25.25vw',
             overflowY: 'auto',
-            padding: '0px 15px',
+            padding: '0px 0.75vw',
           },
         }}>
         <div>
@@ -169,14 +171,14 @@ const ModelApp = (props) => {
                   <Descriptions.Item label='资产状态' span={1}>
                     <Image
                       preview={false}
-                      width='50px'
+                      width='40px'
                       height='20px'
                       src={getStatusUrl(item.field0069)}></Image>
                   </Descriptions.Item>
                 </Descriptions>
                 <RightOutlined
                   onClick={() => openRoomModal(item)}
-                  style={{ fontSize: '20px', color: '#fff', cursor: 'pointer' }}
+                  style={{ fontSize: '1vw', color: '#fff', cursor: 'pointer' }}
                 />
               </div>
             )
@@ -215,15 +217,16 @@ const ModelApp = (props) => {
             style={LeftOutlinedStyle}
           />
           <div>
-            <Title>房源详情</Title>
+            <Title className='title'>房源详情</Title>
             <div className='pl-10 mt-4'>
               <Descriptions
                 column={2}
                 labelStyle={textStyle}
                 contentStyle={textStyle}>
-                <Descriptions.Item label='资产名称'>
+                <Descriptions.Item label='资产名称' span={2}>
                   {roomData.field0004 || '-'}
                 </Descriptions.Item>
+
                 <Descriptions.Item label='产权单位'>
                   {roomData.field0043 || '-'}
                 </Descriptions.Item>
@@ -233,6 +236,7 @@ const ModelApp = (props) => {
                 <Descriptions.Item label='坐落地址'>
                   {roomData.field0009 || '-'}
                 </Descriptions.Item>
+
                 <Descriptions.Item label='有无产证'>
                   {roomData.field0045 || '-'}
                 </Descriptions.Item>
@@ -245,19 +249,20 @@ const ModelApp = (props) => {
                 <Descriptions.Item label='资产状态' span={1}>
                   <Image
                     preview={false}
-                    width='50px'
-                    height='20px'
+                    width='2.51vw'
+                    height='1vw'
                     src={getStatusUrl(roomData.field0069)}></Image>
                 </Descriptions.Item>
               </Descriptions>
             </div>
-            <Title>资产详情</Title>
+            <Title className='title'>资产详情</Title>
             <div className='pl-10 mt-4'>
               {roomData.list.length > 0 && (
                 <Table
                   size='small'
                   pagination={false}
                   columns={columns}
+                  border={true}
                   dataSource={roomData.list}
                   rowClassName={(record, index) => {
                     let className = ''
@@ -285,19 +290,6 @@ const ModelApp = (props) => {
 
 const Title = styled.div`
   background-image: url(${titleBackgroundImage});
-  background-size: 100% 100%;
-  width: 400px;
-  height: 20px;
-  color: #fff;
-  font-style: italic;
-  letter-spacing: 1px;
-  padding-left: 60px;
-  box-sizing: border-box;
-  line-height: 20px;
-  margin-top: 20px;
-  font-family: 'AlibabaPuHuiTi-55';
-  text-shadow: 2px 0px 8px #051c37;
-  overflow-y: auto;
 `
 
 ModelApp.propTypes = {

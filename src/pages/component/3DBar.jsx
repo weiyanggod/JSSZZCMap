@@ -43,10 +43,10 @@ const ThreeDBar = (props) => {
       },
 
       grid: {
-        left: '5%', //图表距边框的距离
+        left: '1%', //图表距边框的距离
         right: '3%',
         top: '20%',
-        bottom: '10%',
+        bottom: '0%',
         containLabel: true,
       },
       xAxis: {
@@ -138,7 +138,7 @@ const ThreeDBar = (props) => {
 
   return (
     <ReactEcharts
-      style={{ height: props.height || '300px' }}
+      style={{ height: props.height || '1.15vw' }}
       option={getOption()}
     />
   )

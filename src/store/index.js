@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from 'react-redux'
 
 const initialState = {
   select: '',
+  searchValue: '',
+  point: '',
 }
 
 // 创建切片
@@ -14,11 +16,17 @@ const counterSlice = createSlice({
     setSelect: (state, action) => {
       state.select = action.payload
     },
+    setSearchValue: (state, action) => {
+      state.searchValue = action.payload
+    },
+    setPoint: (state, action) => {
+      state.point = action.payload
+    },
   },
 })
 
 // 导出切片的 actions
-export const { setSelect } = counterSlice.actions
+export const { setSelect, setSearchValue, setPoint } = counterSlice.actions
 
 // 配置 Redux store
 export const store = configureStore({

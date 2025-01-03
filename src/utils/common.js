@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types' // Import PropTypes
 import dayjs from 'dayjs'
 import lodash from 'lodash'
-const pxToRem = (px) => `${px / 16}rem`
 
 const week = [
   '星期日',
@@ -106,4 +105,4 @@ const getStatusUrl = (key) => {
   return new URL(`../assets/${key}.png`, import.meta.url).href
 }
 
-export { PropTypes, pxToRem, dayjs, week, getWeatherIcon, lodash, getStatusUrl }
+export { PropTypes, dayjs, week, getWeatherIcon, lodash, getStatusUrl }

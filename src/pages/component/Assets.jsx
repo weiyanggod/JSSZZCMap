@@ -6,7 +6,7 @@ import threeDPieBackgroundImage from '@/assets/3d饼图背景.png'
 import titleBackgroundImage from '@/assets/标题背景.png'
 import bracketsBackgroundImage from '@/assets/资产总览大括号.png'
 import { getOverAll, getAssetProportion, getAssetNature } from '@/api/Assets.js'
-
+import '@/pages/styles/Assets.less'
 const Assets = ({ selectId }) => {
   // 资产总览
   const [areaList, setAreaList] = useState([130000, 86008, 10512, 4058])
@@ -45,9 +45,9 @@ const Assets = ({ selectId }) => {
 
   useEffect(() => {
     const render = async () => {
-      const overAllData = await getOverAll({ company: selectId })
+      const overAllData = await getOverAll({ id: selectId })
       const assetProportionData = await getAssetProportion()
-      const assetNatureData = await getAssetNature({ company: selectId })
+      const assetNatureData = await getAssetNature({ id: selectId })
       setAreaList([
         overAllData.field0020,
         overAllData.field0074,
@@ -99,15 +99,15 @@ const Assets = ({ selectId }) => {
   }, [selectId])
 
   return (
-    <Page>
+    <Page className='PageStyle'>
       <Title>资产总览</Title>
-      <AreaList>
+      <AreaList className='AreaListStyle'>
         {areaList.map((item, index) => {
           return (
-            <div className='flex   w-1/2   mt-2 items-center' key={index}>
-              <img src={getAreaInfo('icon', index)} />
-              <div className='ml-1'>
-                <div className='color-[#D4EFEA] fa-85'>
+            <div className='flex   w-1/2   mt-8px items-center' key={index}>
+              <img src={getAreaInfo('icon', index)} className='w-55px h-50px' />
+              <div className='ml-1 text-[16px]'>
+                <div className='color-[#D4EFEA] fa-85 '>
                   {getAreaInfo('name', index)}
                 </div>
                 <div className='number'>{item.toLocaleString()}</div>
@@ -116,8 +116,8 @@ const Assets = ({ selectId }) => {
           )
         })}
       </AreaList>
-      <ExtraInfo>
-        <div className='w-full flex flex-wrap  pl-[75px] py-[10px]'>
+      <ExtraInfo className='ExtraInfoStyle'>
+        <div className='w-full flex flex-wrap  pl-[55px] py-[10px]'>
           {extraInfo.map((item, index) => {
             return (
               <div
@@ -126,7 +126,7 @@ const Assets = ({ selectId }) => {
                 style={{
                   paddingLeft: index === 2 ? '10px' : '',
                 }}>
-                <div className='text-white text-sm fa-55'>{item.name}</div>
+                <div className='text-white text-[16px] fa-55'>{item.name}</div>
                 <div className='number text-[10px]'>
                   {item.number.toLocaleString()}
                 </div>
@@ -135,23 +135,23 @@ const Assets = ({ selectId }) => {
           })}
         </div>
       </ExtraInfo>
-      <Title data-mt='10'>资产占比</Title>
-      <div className='w-full h-10rem flex justify-center'>
-        <div className='w-80%'>
+      <Title data-mt='2'>资产占比</Title>
+      <div className='w-full h-[28%] flex justify-center'>
+        <div className='w-80% pt-[2%]'>
           <ThreeDBar
-            height='220px'
+            height='100%'
             xData={assetProportionData.xData}
             yData={assetProportionData.yData}></ThreeDBar>
         </div>
       </div>
-      <Title data-mt='50'>资产性质</Title>
+      <Title data-mt='2'>资产性质</Title>
       <div className='w-full flex-1 flex justify-center'>
         <div
           className='w-80%'
           style={{
             backgroundImage: `url(${threeDPieBackgroundImage})`,
             backgroundRepeat: 'no-repeat',
-            backgroundPosition: '100px 60px',
+            backgroundPosition: '50% 70%',
           }}>
           <ThreeDPie realData={assetNatureData}></ThreeDPie>
         </div>
@@ -164,10 +164,7 @@ Assets.propTypes = {
 }
 const Page = styled.div`
   position: relative;
-  left: ${pxToRem(15)};
-  top: ${pxToRem(83)};
-  width: ${pxToRem(500)};
-  height: ${pxToRem(780)};
+
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -176,28 +173,25 @@ const Page = styled.div`
 export const Title = styled.div`
   background-image: url(${titleBackgroundImage});
   background-size: 100% 100%;
-  width: ${pxToRem(423)};
-  height: ${pxToRem(40)};
-  font-size: 18px;
+  width: 21.36vw;
+  height: 2.02vw;
+  font-size: 0.909vw;
   font-family: 'AlibabaPuHuiTi-75';
   color: #ecf2ff;
   text-align: left;
   margin-top: ${(props) => {
-    return props['data-mt'] ? pxToRem(props['data-mt']) : pxToRem(20)
+    return props['data-mt'] ? props['data-mt'] + '%' : '%'
   }};
-  line-height: ${pxToRem(35)};
-  padding-left: ${pxToRem(30)};
+  line-height: 1.76vw;
+  padding-left: 1.51vw;
   box-sizing: border-box;
 `
 const AreaList = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 80%;
-  margin-left: ${pxToRem(20)};
   justify-content: space-around;
   .number {
-    font-size: ${pxToRem(20)};
-    letter-spacing: ${pxToRem(0.5)};
     font-weight: 600;
     background: linear-gradient(to bottom, #23fffd, #fff);
     -webkit-background-clip: text;
@@ -208,8 +202,7 @@ const ExtraInfo = styled.div`
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  margin-top: ${pxToRem(10)};
-  background-image: url(${bracketsBackgroundImage});
+  /* background-image: url(${bracketsBackgroundImage}); */
   background-position: 50% 0%;
   background-repeat: no-repeat;
   .item {
@@ -218,8 +211,6 @@ const ExtraInfo = styled.div`
   }
   .number {
     font-weight: 600;
-    font-size: ${pxToRem(15)};
-    margin-top: ${pxToRem(2)};
     background: linear-gradient(
       to bottom,
       #fdff60,

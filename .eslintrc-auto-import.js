@@ -14,6 +14,7 @@ export default {
     "Route": true,
     "Routes": true,
     "Select": true,
+    "Spin": true,
     "Table": true,
     "Tooltip": true,
     "createRef": true,
@@ -25,7 +26,6 @@ export default {
     "lazy": true,
     "lodash": true,
     "memo": true,
-    "pxToRem": true,
     "startTransition": true,
     "useCallback": true,
     "useContext": true,
@@ -55,6 +55,7 @@ export default {
     "useSyncExternalStore": true,
     "useTransition": true,
     "week": true,
-    "秀洲区": true
+    "秀洲区": true,
+    "秀洲区地图数据": true
   }
 }

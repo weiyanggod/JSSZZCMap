@@ -2,10 +2,13 @@ import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { getIPInfo, getWeatherInfo } from '@/api/common.js'
 import cutImg from '@/assets/切换.png'
-import homeImg from '@/assets/首页.png'
 import { useDispatch } from 'react-redux'
-import { setSelect } from '@/store/index.js'
+import { setSelect, setPoint } from '@/store/index.js'
 import { getCompany } from '@/api/common.js'
+import { getPoint } from '@/api/MapApp.js'
+
+import '@/pages/styles/Header.less'
+
 const Header = () => {
   const dispatch = useDispatch()
   const [weatherInfo, setWeatherInfo] = useState({
@@ -13,14 +16,42 @@ const Header = () => {
     temperature: '',
   })
   const [selectList, setSelectList] = useState([])
+  const [selectValue, setSelectValue] = useState('')
   const [nowTime, setNowTime] = useState(dayjs().format('HH:mm:ss'))
+  const [fetching, setFetching] = useState(false)
+  const [pointList, setPointList] = useState([])
 
+  // 更新当前时间
   setInterval(() => {
     setNowTime(dayjs().format('HH:mm:ss'))
   }, 1000)
+
+  // 选择
   const onSelect = (value) => {
+    setSelectValue(value)
     dispatch(setSelect(value))
   }
+
+  // 位置选择
+  const selectPoint = (value) => {
+    const item = pointList.find((i) => i.field0132 === value.value)
+    dispatch(setPoint(item))
+  }
+
+  // 清除选择点
+  const clearPoint = () => {
+    dispatch(setPoint(''))
+  }
+
+  // 远程搜索
+  const debounceFetcher = lodash.debounce((value) => {
+    getPoint({ id: selectValue, name: value }).then((res) => {
+      const list = res.filter((i) => i.field0012 !== null)
+
+      setPointList(list)
+      setFetching(false)
+    })
+  }, 1000)
 
   useEffect(() => {
     const render = async () => {
@@ -53,68 +84,76 @@ const Header = () => {
       theme={{
         components: {
           Select: {
-            /* 这里是你的组件 token */
-            selectorBg: 'rgba(0,0,0,0)',
-            activeBorderColor: 'rgba(0,0,0,0)',
-            hoverBorderColor: 'rgba(0,0,0,0)',
             optionFontSize: '0.8vw',
+            optionActiveBg: '#266c75',
+            optionSelectedBg: 'transparent',
           },
         },
       }}>
-      <div className='relative text-white'>
-        <Time>
+      <div className=' text-white'>
+        <Time className='time'>
           <div className='flex  items-center'>
             <img
               src={getWeatherIcon(weatherInfo.weather)}
-              style={{ width: 40, height: 40 }}
+              className='w-[40px] h-[40px]'
             />
-            <div className='ml-4 w-6rem'>
-              <div className='text-xl timeColor tracking-0.25rem font-600 fa-115 '>
+            <div className='ml-16px w-96px'>
+              <div className='text-20px timeColor tracking-4px font-600 fa-115 '>
                 {weatherInfo.temperature}°C
               </div>
-              <div className='text-0.625rem color-[#90FFF6] fa-45'>
+              <div className='text-10px color-[#90FFF6] fa-45'>
                 {weatherInfo.weather}
               </div>
             </div>
-            <div className='ml-4'>
-              <div className='text-xl timeColor tracking-0.25rem font-600'>
+            <div className='ml-16px'>
+              <div className='text-20px timeColor tracking-4px font-600'>
                 {nowTime}
               </div>
-              <div className='text-0.625rem color-[#90FFF6] fa-45'>
+              <div className='text-10px color-[#90FFF6] fa-45'>
                 {dayjs().format('YYYY年MM月DD日')}
               </div>
             </div>
-            <div className='ml-4 text-xl tracking-0.25rem font-600 timeColor mb-a'>
+            <div className='week  text-20px tracking-4px font-600 timeColor mb-a'>
               {week[dayjs().format('d')]}
             </div>
           </div>
         </Time>
-        <Title className='timeColor'>经营性资产数字地图</Title>
-        <Edit>
+        <Title className='timeColor Title'>经营性资产数字地图</Title>
+        <Edit className='Edit'>
+          <Select
+            allowClear
+            showSearch
+            labelInValue
+            placeholder='请输入'
+            filterOption={false}
+            onSearch={debounceFetcher}
+            fieldNames={{
+              label: 'field0110',
+              value: 'field0132',
+            }}
+            notFoundContent={fetching ? <Spin size='small' /> : null}
+            options={pointList}
+            onSelect={selectPoint}
+            onClear={clearPoint}
+            className='mr-20px w-200px h-[30px]'
+          />
+
           <div className='flex   items-center'>
-            <img
-              src={cutImg}
-              className='cursor-pointer'
-              onClick={() => {
-                window.location.reload()
-              }}
-            />
             <Select
               defaultValue='全部'
-              style={{ width: '8vw' }}
+              className='mr-20px w-150px h-[30px]'
               onSelect={onSelect}
               fieldNames={{ label: 'name', value: 'id' }}
               options={selectList}
             />
           </div>
-          <div
-            className='flex   items-center cursor-pointer'
+          <img
+            src={cutImg}
+            className='cursor-pointer w-[55px] h-[55px]'
             onClick={() => {
               window.location.reload()
-            }}>
-            <img src={homeImg} />
-            <div className='timeColor font-600  fa-85'>首页</div>
-          </div>
+            }}
+          />
         </Edit>
       </div>
     </ConfigProvider>
@@ -123,26 +162,18 @@ const Header = () => {
 
 const Time = styled.div`
   position: absolute;
-  top: ${pxToRem(7)};
-  left: ${pxToRem(40)};
 `
 
 const Title = styled.div`
-  /* text-shadow: 1px 0px 1px #fff; */
-  font-size: ${pxToRem(28)};
   color: #fff;
   position: absolute;
-  top: ${pxToRem(18)};
   left: 50%;
   transform: translate(-50%, 0);
   font-style: italic;
-  letter-spacing: ${pxToRem(5)};
   font-family: 'AlibabaPuHuiTi-115';
 `
 const Edit = styled.div`
   position: absolute;
-  top: ${pxToRem(0)};
-  right: ${pxToRem(40)};
   display: flex;
   align-items: center;
 `

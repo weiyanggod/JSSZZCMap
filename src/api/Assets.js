@@ -4,8 +4,8 @@ export const getOverAll = (params) => {
   return request.get('/getOverAll', params)
 }
 // 获取资产占比
-export const getAssetProportion = () => {
-  return request.get('/getAssetProportion')
+export const getAssetProportion = (params) => {
+  return request.get('/getAssetProportion', params)
 }
 
 // 获取资产性质

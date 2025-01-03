@@ -26,14 +26,25 @@ const ThreeDPie = (props) => {
       },
       plotOptions: {
         pie: {
-          size: 160,
-          innerSize: 120,
+          size:
+            window.innerWidth <= 1440
+              ? 140
+              : window.innerWidth >= 1920
+                ? 160
+                : 140,
+          innerSize:
+            window.innerWidth <= 1440
+              ? 80
+              : window.innerWidth >= 1920
+                ? 120
+                : 90,
           depth: 30,
           cursor: 'pointer',
           colors: ['#d6fbff', '#4efae3', '#7f9998', '#63c7f7', '#00F39F'],
           dataLabels: {
             softConnector: false,
             enabled: true,
+            distance: 15,
             format: `<div ><span style="color:#d4efea; font-weight:400">{point.name}</span><br/><span style="color:#d4efea; font-weight:400">{(multiply point.y 100):.2f}%</span></div> `,
             style: {
               color: '#eee',
